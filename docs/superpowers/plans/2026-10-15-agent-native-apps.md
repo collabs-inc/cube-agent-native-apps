@@ -10,12 +10,12 @@
 
 ## Tasks
 
-- [ ] Scaffold all eleven apps using the published standalone transformations; retain upstream source provenance and licenses.
-- [ ] Test and implement shared launcher: invalid PORT fails, loopback only, persisted random secret, stable external storage, existing data never overwritten, subprocess termination forwarded.
-- [ ] Implement embedded production database, stable owner, local upload, and private blob support using public framework APIs. Verify fresh database initialization.
-- [ ] Apply app-specific storage and startup fixes. Build each app and fix actual build failures.
-- [ ] Run production/browser/core-action/restart checks, recording real service prerequisites separately.
-- [ ] Commit and publish each passing app and add validated Market entries. Review integration diff and report exact results.
+- [x] Scaffold all eleven apps using the published standalone transformations; retain upstream source provenance and licenses.
+- [x] Test and implement shared launcher: invalid PORT fails, loopback only, persisted random secret, stable external storage, existing data never overwritten, subprocess termination forwarded.
+- [x] Implement embedded production database, stable owner, local upload, and private blob support using public framework APIs. Verify fresh database initialization.
+- [x] Apply app-specific storage and startup fixes. Build each app and fix actual build failures.
+- [x] Run production/browser/core-action/restart checks, recording real service prerequisites separately.
+- [x] Commit and publish each passing app and add validated Market entries. Review integration diff and report exact results.
 
 ## Review focus
 
