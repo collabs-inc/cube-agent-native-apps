@@ -39,7 +39,7 @@ seconds. Startup binds to loopback on Cube's assigned port.
 
 The final review found and fixed local media consumers in Mail, Slides, Clips,
 and Design. Mail's 26 focused tests cover MIME attachments, oversized uploads,
-and invalid blob paths. Slides' 106 focused tests include real storage bytes
+and invalid blob paths. Slides' 109 focused tests include real storage bytes
 inside the exported PPTX archive. Clips' 23 route tests include full, prefix,
 suffix, and unsatisfied range responses after authorization checks. Design's
 135 focused tests include real Chromium rendering and embedded PNG bytes for
@@ -64,3 +64,12 @@ Upstream doctor findings remain, including Content and Mail baseline findings;
 the inherited configuration does not fail builds on doctor findings. Passing
 build and integration checks does not mean every upstream feature or test suite
 has passed.
+
+## Publication audit
+
+On October 15, 2026, a fresh audit confirmed that all eleven public Market
+revisions match the clean local and remote repositories. Each published app
+started from its production build, reported healthy configuration, served its
+root page with HTTP 200, and exited successfully under Cube's shutdown
+sequence. The shared tests and Mail, Slides, Clips, and Design regression
+suites passed again.
