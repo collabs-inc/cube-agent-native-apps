@@ -13,10 +13,13 @@ for(const directory of apps){
  let ws=await readFile(path.join(dest,'pnpm-workspace.yaml'),'utf8');
  if(!ws.includes('onlyBuiltDependencies:'))ws+='\nonlyBuiltDependencies:\n  - esbuild\n  - "@swc/core"\n  - node-pty\n  - ffmpeg-static\n';
  await writeFile(path.join(dest,'pnpm-workspace.yaml'),ws);
- const config=JSON.parse(await readFile(path.join(dest,'agent-native.json'),'utf8'));config.onboarding={...config.onboarding,firstRun:{development:'off',production:'off'}};
+ const config=JSON.parse(await readFile(path.join(dest,'agent-native.json'),'utf8'));config.onboarding={...config.onboarding,firstRun:{development:'off',production:'off'}};config.deployment={...config.deployment,environment:'local'};config.runtime={...config.runtime,auth:{...config.runtime?.auth,enabled:false}};
  await writeFile(path.join(dest,'agent-native.json'),JSON.stringify(config,null,2)+'\n');
  const title=slug[0].toUpperCase()+slug.slice(1);
- await writeFile(path.join(dest,'cube.json'),JSON.stringify({name:`Agent-Native ${title}`,description:`${title} by Agent-Native, adapted for Cube with persistent local storage.`,platforms:['linux','darwin'],install:'node cube/install.mjs',start:'node cube/start.mjs'},null,2)+'\n');
+ await writeFile(path.join(dest,'cube.json'),JSON.stringify({name:`Agent-Native ${title}`,description:`${title} by Agent-Native, adapted for Cube with persistent local storage.`,icon:'public/favicon.svg',platforms:['linux','darwin'],install:'node cube/install.mjs',start:'node cube/start.mjs'},null,2)+'\n');
  await writeFile(path.join(dest,'UPSTREAM.json'),JSON.stringify({repository:'https://github.com/BuilderIO/agent-native',revision:'6ac757a5ea3181158904e832f7a0a6c47c3694dd',path:`templates/${app}`,core:'0.209.0'},null,2)+'\n');
+ const ignore=path.join(dest,'.gitignore');
+ const existingIgnore=await readFile(ignore,'utf8');
+ if(!existingIgnore.includes('# Cube runtime state')) await writeFile(ignore,existingIgnore+'\n# Cube runtime state lives outside the checkout; these paths are symlinks.\n/data\n/.agent-native\n/media\n/plans\n/.deploy-tmp/\n');
  console.log('Integrated',pkg.name);
 }
