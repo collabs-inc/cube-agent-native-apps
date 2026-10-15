@@ -73,3 +73,12 @@ started from its production build, reported healthy configuration, served its
 root page with HTTP 200, and exited successfully under Cube's shutdown
 sequence. The shared tests and Mail, Slides, Clips, and Design regression
 suites passed again.
+
+## Fresh installation correction
+
+A subsequent Design installation through Cube failed because the original
+verification checkouts retained ignored `.generated/bridge` files. Those files
+are absent from a Git clone. The Cube build wrapper now creates the output
+directory and runs Design's bridge generator before the production build.
+The earlier checks above establish prepared-checkout behavior, not proof of a
+clean installation. Fresh-clone installation must be checked separately.
