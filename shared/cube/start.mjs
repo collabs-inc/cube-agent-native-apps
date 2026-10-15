@@ -10,4 +10,6 @@ const {name}=JSON.parse(await readFile(path.join(appDir,'package.json'),'utf8'))
 const config=path.join(process.env.XDG_DATA_HOME || path.join(os.homedir(),'.local/share'),name,'config.env');
 if(existsSync(config)) process.loadEnvFile(config);
 Object.assign(process.env,await prepareRuntime(appDir));
+// Cube closes PTYs with SIGHUP before SIGTERM; use the server's drain path.
+process.once('SIGHUP', () => process.kill(process.pid, 'SIGTERM'));
 await import(pathToFileURL(path.join(appDir,'.output/server/index.mjs')).href);

@@ -39,6 +39,6 @@ export async function prepareRuntime(appDir, env = process.env) {
   if(!existing?.isSymbolicLink()) await symlink(target,source,'dir');
  }
  return {...env, CUBE_APP_DATA_DIR:data, DATABASE_URL:`pglite:${path.join(data,'pglite')}`, BETTER_AUTH_SECRET:secret,
-  AUTH_DISABLED:'1', NODE_ENV:'production', HOST:'127.0.0.1', NITRO_HOST:'127.0.0.1', PORT:String(Number(env.PORT)), NITRO_PORT:String(Number(env.PORT)),
+  AUTH_DISABLED:'1', SERVER_SHUTDOWN_TIMEOUT:'1', NODE_ENV:'production', HOST:'127.0.0.1', NITRO_HOST:'127.0.0.1', PORT:String(Number(env.PORT)), NITRO_PORT:String(Number(env.PORT)),
   AGENT_NATIVE_MEDIA_DIR:path.join(data,'media'),PLAN_LOCAL_DIR:path.join(data,'plans')};
 }
