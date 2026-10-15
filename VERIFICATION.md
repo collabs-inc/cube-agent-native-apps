@@ -82,3 +82,11 @@ are absent from a Git clone. The Cube build wrapper now creates the output
 directory and runs Design's bridge generator before the production build.
 The earlier checks above establish prepared-checkout behavior, not proof of a
 clean installation. Fresh-clone installation must be checked separately.
+
+The corrected Design installer passed from a clean Git clone through Cube's
+`runAppInstall` runner (exit 0). Retrying the previously failed installed app
+then completed its actual clone/install/start flow at revision `ab1f04a` and
+reached `running`. Browser verification through its Cube loopback gate rendered
+the signed-in local workspace, template gallery, and provider setup; production
+configuration health returned `ok: true`. The browser runtime could not resolve
+the public app hostname, so this check does not establish public-host routing.
