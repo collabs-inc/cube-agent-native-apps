@@ -47,3 +47,13 @@ test('migrates seeded state across filesystems',async t=>{
  await prepareRuntime(app,{...env,XDG_DATA_HOME:persistent});
  assert.equal(await readFile(path.join(app,'.agent-native','state'),'utf8'),'seed');
 });
+test('updates replace generated build configuration without losing agent state',async t=>{
+ const {app,env}=await fixture(t);await prepareRuntime(app,env);
+ await writeFile(path.join(app,'.agent-native','build-config.json'),'old build');
+ await writeFile(path.join(app,'.agent-native','memory'),'keep');
+ await rm(path.join(app,'.agent-native'));await mkdir(path.join(app,'.agent-native'));
+ await writeFile(path.join(app,'.agent-native','build-config.json'),'new build');
+ await prepareRuntime(app,env);
+ assert.equal(await readFile(path.join(app,'.agent-native','build-config.json'),'utf8'),'new build');
+ assert.equal(await readFile(path.join(app,'.agent-native','memory'),'utf8'),'keep');
+});

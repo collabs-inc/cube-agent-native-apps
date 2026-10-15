@@ -1,5 +1,5 @@
 import { randomBytes } from 'node:crypto';
-import { cp, mkdir, lstat, readdir, readFile, writeFile, rename, symlink, rm } from 'node:fs/promises';
+import { copyFile, cp, mkdir, lstat, readdir, readFile, writeFile, rename, symlink, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -19,6 +19,17 @@ export async function prepareRuntime(appDir, env = process.env) {
   const existing=await lstat(source).catch(error=>{if(error.code==='ENOENT')return null;throw error;});
   if(existing && !existing.isSymbolicLink()) {
    if(!existing.isDirectory()) throw new Error(`Cannot preserve existing ${name}: not a directory.`);
+   // Vite regenerates this cache during every install, including updates.
+   // Refresh only this generated file; never overwrite persisted agent state.
+   if(name==='.agent-native') {
+    const generated=path.join(source,'build-config.json');
+    const exists=await lstat(generated).catch(error=>{if(error.code==='ENOENT')return null;throw error;});
+    if(exists?.isFile()) {
+     await mkdir(target,{recursive:true,mode:0o700});
+     await copyFile(generated,path.join(target,'build-config.json'));
+     await rm(generated);
+    }
+   }
    const files=await readdir(source);
    if(files.length) {
     const persisted=await readdir(target).catch(error=>{if(error.code==='ENOENT')return [];throw error;});
