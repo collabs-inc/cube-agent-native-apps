@@ -32,7 +32,7 @@ Install `@agent-native/core@0.209.0` and check out the upstream source tag `@age
 
 In each app, generate or refresh its lockfile with `npm exec --yes --package=pnpm@10.29.1 -- pnpm install`, then run `node cube/install.mjs` to verify frozen dependency installation and the production build. Launch with `PORT=<free-port> node cube/start.mjs`. A fresh install must use its own data root.
 
-Run `npm test` here to check storage persistence, private/public separation, traversal rejection, invalid ports, checkout replacement, cross-filesystem migration, and Clips' local storage policy. Per-app verification results describe browser and action checks separately from live external-service checks.
+Run `npm test` here to check storage persistence, private/public separation, traversal rejection, invalid ports, checkout replacement, cross-filesystem migration, and Clips' local storage policy. [Verification results](VERIFICATION.md) describe browser and action checks separately from live external-service checks.
 
 ## Connection and platform requirements
 
